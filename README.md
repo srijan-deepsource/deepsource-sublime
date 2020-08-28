@@ -1,3 +1,5 @@
+## DeepSource Sublime Plugin.
+
 This Is a SublimeText 3 plugin developed to support local runs on deepsource.
 It calls the `cli` with the flag `--analyze` for a single `filepath` and uses the result sent by cli to raise issues.
 
