@@ -1,0 +1,4 @@
+[
+	{ "keys": ["super+alt+a"], "command": "analyzer"},
+	{ "keys": ["super+alt+q"], "command": "analyzer", "args": {"action": "ignore"}}
+]
