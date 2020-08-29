@@ -1,4 +1,5 @@
 [
 	{ "keys": ["super+alt+a"], "command": "analyzer"},
-	{ "keys": ["super+alt+q"], "command": "analyzer", "args": {"action": "ignore"}}
+	{ "keys": ["super+alt+q"], "command": "analyzer", "args": {"action": "ignore"}},
+	{ "keys": ["super+alt+w"], "command": "analyzer", "args": {"action": "list"}}
 ]
