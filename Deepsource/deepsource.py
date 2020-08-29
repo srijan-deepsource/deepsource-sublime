@@ -25,6 +25,9 @@ class AnalyzerCommand(sublime_plugin.TextCommand):
         # See if skipcq needs to be added.
         if action == 'ignore':
             self.add_skipcq(edit)
+        # Action to list all issues raised.
+        elif action == 'list':
+            self.popup_issues_list()
         else:
             # Run analysis
             print("Running DeepSource Analysis: ")
@@ -96,6 +99,33 @@ class AnalyzerCommand(sublime_plugin.TextCommand):
 
             self.view.replace(edit, line_region, line_txt)
             self.view.end_edit(edit)
+
+    def popup_issues_list(self):
+        """ Display a popup list of the issues found """
+        view_id = self.view.id()
+
+        if view_id not in DEEPSOURCE_ISSUES:
+            return
+
+        # No Issues were found
+        if len(DEEPSOURCE_ISSUES[view_id]) == 1:
+            sublime.message_dialog("No DeepSource issues found")
+            return
+
+        issues = [(key + 1, value)
+                  for key, value in DEEPSOURCE_ISSUES[view_id].items()
+                  if key != 'visible']
+        line_nums, panel_items = zip(*sorted(issues,
+                                             key=lambda issue: issue[1]))
+
+        def on_done(selected_item):
+            """ Jump to the line of the item that was selected from the list """
+            if selected_item == -1:
+                return
+            self.view.run_command("goto_line",
+                                  {"line": line_nums[selected_item]})
+
+        self.view.window().show_quick_panel(list(panel_items), on_done)
 
 
 class AnalyzerThread(threading.Thread):
